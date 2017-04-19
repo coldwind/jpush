@@ -20,6 +20,8 @@ int jpushInit(cJSON **pushMsg, JPushNotification **note)
     (*note)->ios = NULL;
     (*note)->android = NULL;
     (*note)->win = NULL;
+
+    return 0;
 }
 
 int setPlatform(cJSON *pushMsg, int platform)
@@ -31,7 +33,6 @@ int setPlatform(cJSON *pushMsg, int platform)
     else
     {
         cJSON *platObj = cJSON_CreateArray();
-        int i = 0;
 
         if (platform & J_PUSH_PLATFORM_IOS)
         {
@@ -50,6 +51,8 @@ int setPlatform(cJSON *pushMsg, int platform)
 
         cJSON_AddItemToObject(pushMsg, "platform", platObj);
     }
+
+    return 0;
 }
 
 int setAudienceTarget(cJSON *pushMsg, int type, int targetCount, char *target[])
@@ -57,7 +60,7 @@ int setAudienceTarget(cJSON *pushMsg, int type, int targetCount, char *target[])
     if (type == J_PUSH_AUDIENCE_ALL)
     {
         cJSON_AddStringToObject(pushMsg, "audience", "all");
-        return 1;
+        return 0;
     }
 
     int i;
@@ -287,7 +290,6 @@ int setNotification(cJSON *pushMsg, JPushNotification *note)
     cJSON *notification = cJSON_CreateObject();
     if (note->all != NULL)
     {
-        cJSON *platformNote = cJSON_CreateObject();
         if (note->all->alert != J_PUSH_STRING_NULL)
         {
             cJSON_AddStringToObject(notification, "alert", note->all->alert);
@@ -491,4 +493,6 @@ char *jpushEval(cJSON *pushMsg)
 int jpushClean(cJSON *pushMsg)
 {
     cJSON_Delete(pushMsg);
+
+    return 0;
 }

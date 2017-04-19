@@ -6,10 +6,6 @@
 
 int main(int argc, char *argv[])
 {
-    char body[1024];
-    char *a[3] = {"value1","value2","value3"};
-    memset(body, 0, sizeof(body));
-
     cJSON *jpush;
     JPushNotification *note;
     jpushInit(&jpush, &note);
@@ -18,7 +14,8 @@ int main(int argc, char *argv[])
     setPlatform(jpush, J_PUSH_PLATFORM_IOS | J_PUSH_PLATFORM_ANDROID);
 
     // 设置audience
-    setAudienceTarget(jpush, J_PUSH_AUDIENCE_TAG, 3, a);
+    char *target[3] = {"value1","value2","value3"}; // 推送的audience值
+    setAudienceTarget(jpush, J_PUSH_AUDIENCE_TAG, 3, target);
 
     // setAllApns(note, "hello world!"); // 注:设置此函数后不需要再设置具体平台 所有平台全部推送
 
