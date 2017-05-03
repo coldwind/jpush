@@ -468,7 +468,7 @@ char *jpushEval(cJSON *pushMsg)
     char *postData = cJSON_Print(pushMsg);
 
     CURL *curl;
-    CURLcode res;
+    // CURLcode res;
     char *str = (char *)calloc(1024, sizeof(char));
 
     struct curl_slist *headers = NULL;
@@ -484,7 +484,7 @@ char *jpushEval(cJSON *pushMsg)
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, str);
     curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1L);
     curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1);
-    res = curl_easy_perform(curl);
+    curl_easy_perform(curl);
     curl_easy_cleanup(curl);
 
     return str;
